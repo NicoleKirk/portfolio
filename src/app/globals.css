@@ -1,26 +1,180 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* CAD Software Color Palette */
+  --background: #1a1a1a;
+  --foreground: #e0e0e0;
+  --primary: #00ff88;
+  --secondary: #0088ff;
+  --accent: #ff8800;
+  --border: #333333;
+  --surface: #2a2a2a;
+  --surface-hover: #3a3a3a;
+  --text-muted: #888888;
+  --success: #00ff88;
+  --warning: #ffaa00;
+  --error: #ff4444;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-text-muted: var(--text-muted);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* CAD-style crosshair cursor - more precise like professional CAD software */
+* {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><style>.crosshair{fill:none;stroke:%2300ff88;stroke-width:1;stroke-linecap:round;}</style></defs><line class="crosshair" x1="16" y1="4" x2="16" y2="28"/><line class="crosshair" x1="4" y1="16" x2="28" y2="16"/><circle cx="16" cy="16" r="2" fill="%2300ff88"/></svg>') 16 16, crosshair !important;
+}
+
+/* Override cursor for interactive elements */
+button, a, input, textarea, select, [role="button"] {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><style>.crosshair{fill:none;stroke:%2300ff88;stroke-width:1;stroke-linecap:round;}</style></defs><line class="crosshair" x1="16" y1="4" x2="16" y2="28"/><line class="crosshair" x1="4" y1="16" x2="28" y2="16"/><circle cx="16" cy="16" r="2" fill="%2300ff88"/></svg>') 16 16, crosshair !important;
+}
+
+/* CAD-style crosshair cursor with custom styling */
+.cad-cursor {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><style>.crosshair{fill:none;stroke:%2300ff88;stroke-width:1;stroke-linecap:round;}</style></defs><line class="crosshair" x1="16" y1="4" x2="16" y2="28"/><line class="crosshair" x1="4" y1="16" x2="28" y2="16"/><circle cx="16" cy="16" r="2" fill="%2300ff88"/></svg>') 16 16, crosshair !important;
+}
+
+/* Hover states for interactive elements */
+button:hover, a:hover, [role="button"]:hover {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><defs><style>.crosshair{fill:none;stroke:%2300ff88;stroke-width:1;stroke-linecap:round;}</style></defs><line class="crosshair" x1="16" y1="4" x2="16" y2="28"/><line class="crosshair" x1="4" y1="16" x2="28" y2="16"/><circle cx="16" cy="16" r="2" fill="%2300ff88"/></svg>') 16 16, crosshair !important;
+}
+
+/* CAD-style scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* CAD-style selection */
+::selection {
+  background: var(--primary);
+  color: var(--background);
+}
+
+/* Technical grid pattern */
+.cad-grid {
+  background-image: 
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* CAD-style borders */
+.cad-border {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+}
+
+.cad-border-thick {
+  border: 2px solid var(--border);
+  border-radius: 4px;
+}
+
+/* Technical button styles */
+.cad-button {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  padding: 8px 16px;
+  border-radius: 2px;
+  font-family: var(--font-geist-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.cad-button:hover {
+  background: var(--surface-hover);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.cad-button-primary {
+  background: var(--primary);
+  color: var(--background);
+  border-color: var(--primary);
+}
+
+.cad-button-primary:hover {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--background);
+}
+
+/* Technical input styles */
+.cad-input {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  padding: 8px 12px;
+  border-radius: 2px;
+  font-family: var(--font-geist-mono);
+  font-size: 12px;
+}
+
+.cad-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 1px var(--primary);
+}
+
+/* CAD-style panels */
+.cad-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.cad-panel-header {
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px;
+  font-family: var(--font-geist-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--primary);
 }
