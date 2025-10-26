@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X, Home, Briefcase, Wrench } from 'lucide-react';
+import { Menu, X, Home, Briefcase, Wrench, User, Mail } from 'lucide-react';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +13,8 @@ const Navigation = () => {
     { href: '/', label: 'Home', icon: Home },
     { href: '/projects', label: 'Projects', icon: Briefcase },
     { href: '/skills', label: 'Skills', icon: Wrench },
+    { href: '/about', label: 'About', icon: User },
+    { href: '/contact', label: 'Contact', icon: Mail },
   ];
 
   return (
