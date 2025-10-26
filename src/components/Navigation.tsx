@@ -13,8 +13,6 @@ const Navigation = () => {
     { href: '/', label: 'Home', icon: Home },
     { href: '/projects', label: 'Projects', icon: Briefcase },
     { href: '/skills', label: 'Skills', icon: Wrench },
-    { href: '/about', label: 'About', icon: User },
-    { href: '/contact', label: 'Contact', icon: Mail },
   ];
 
   return (
