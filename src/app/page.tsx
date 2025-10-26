@@ -1,8 +1,41 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Code, Cpu, Palette, Wrench } from 'lucide-react';
+import { ArrowRight, Linkedin, Github } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+
+// Typewriter Quote Component
+function TypewriterQuote({ text, speed = 50 }: { text: string; speed?: number }) {
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showCursor, setShowCursor] = useState(true);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, speed);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, text, speed]);
+
+  // Blinking cursor effect
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 530);
+    return () => clearInterval(cursorInterval);
+  }, []);
+
+  return (
+    <span className="font-mono">
+      {displayedText}
+      <span className={`inline-block w-0.5 h-6 bg-primary ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-75`}></span>
+    </span>
+  );
+}
 
 export default function Home() {
   return (
@@ -45,7 +78,7 @@ export default function Home() {
             </p>
             <p className="text-lg text-foreground mb-8 max-w-3xl mx-auto">
               Crafting innovative solutions through precision engineering and creative design. 
-              Specializing in CAD modeling, product development, and technical innovation.
+              Specialising in CAD modeling, product development, and technical innovation.
             </p>
             
             {/* Design Quote */}
@@ -55,8 +88,8 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="mb-8"
             >
-              <blockquote className="text-xl sm:text-2xl text-primary font-mono italic max-w-4xl mx-auto">
-                "Design is intelligence made visible"
+              <blockquote className="text-xl sm:text-2xl text-primary italic max-w-4xl mx-auto">
+                <TypewriterQuote text='"Design is intelligence made visible"' speed={80} />
               </blockquote>
               <p className="text-sm text-text-muted mt-2 font-mono">
                 — Alina Wheeler
@@ -74,99 +107,109 @@ export default function Home() {
               <span>VIEW PROJECTS</span>
               <ArrowRight size={16} />
             </Link>
-            <Link href="/contact" className="cad-button flex items-center space-x-2">
-              <span>GET IN TOUCH</span>
-            </Link>
+            <div className="flex gap-4">
+              <a 
+                href="https://www.linkedin.com/in/nicol3kirk" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="cad-button flex items-center justify-center px-2 py-1 hover:bg-primary hover:text-background transition-all duration-300"
+              >
+                <Linkedin size={20} />
+              </a>
+              <a 
+                href="https://github.com/NicoleKirk" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="cad-button flex items-center justify-center px-2 py-1 hover:bg-primary hover:text-background transition-all duration-300"
+              >
+                <Github size={20} />
+              </a>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Skills Preview */}
-      <section className="py-20 bg-surface">
+      {/* About Me & Tech Stack Section */}
+      <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              TECHNICAL <span className="text-primary">EXPERTISE</span>
-            </h2>
-            <p className="text-text-muted font-mono">
-              Advanced proficiency in design engineering tools and methodologies
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                icon: Code,
-                title: 'CAD Modeling',
-                description: 'SolidWorks, Fusion 360, AutoCAD expertise'
-              },
-              {
-                icon: Cpu,
-                title: 'Simulation',
-                description: 'FEA, CFD, and stress analysis'
-              },
-              {
-                icon: Palette,
-                title: 'Design',
-                description: 'Product design and prototyping'
-              },
-              {
-                icon: Wrench,
-                title: 'Engineering',
-                description: 'Mechanical systems and manufacturing'
-              }
-            ].map((skill, index) => (
-              <motion.div
-                key={skill.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                className="cad-panel text-center group hover:border-primary transition-all duration-300"
-              >
-                <div className="w-16 h-16 bg-primary/10 rounded-sm flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <skill.icon className="w-8 h-8 text-primary" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* About Me */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="flex flex-col h-full"
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-8">
+                ABOUT <span className="text-primary">ME</span>
+              </h2>
+              <div className="cad-panel flex-1">
+                <div className="p-8 h-full flex flex-col justify-center">
+                  <p className="text-lg text-text-muted mb-6 leading-relaxed">
+                    Hi! I&apos;m Nicole, a Design Engineering student at Queen Mary University of London, where I love to create from CAD to code.
+                  </p>
+                  <p className="text-lg text-text-muted leading-relaxed">
+                    I was awarded a position at the prestigious CERN Particle School and selected as the youngest research assistant at QMUL. These opportunities allowed me to collaborate directly with leading engineers and academics on cutting-edge, sustainability-focused research projects.
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-2 font-mono">
-                  {skill.title}
-                </h3>
-                <p className="text-text-muted text-sm">
-                  {skill.description}
-                </p>
-              </motion.div>
-            ))}
+              </div>
+            </motion.div>
+
+            {/* Tech Stack */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="flex flex-col h-full"
+            >
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-8">
+                TECH <span className="text-primary">STACK</span>
+              </h2>
+              <div className="cad-panel flex-1">
+                <div className="p-8 h-full flex flex-col justify-center">
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      { name: 'C++', color: 'bg-primary/20 text-primary border-primary/30' },
+                      { name: 'Python', color: 'bg-secondary/20 text-secondary border-secondary/30' },
+                      { name: 'React', color: 'bg-accent/20 text-accent border-accent/30' },
+                      { name: 'JavaScript', color: 'bg-primary/20 text-primary border-primary/30' },
+                      { name: 'Java', color: 'bg-surface-hover text-foreground border-border' },
+                      { name: 'Swift', color: 'bg-secondary/20 text-secondary border-secondary/30' },
+                      { name: 'SolidWorks', color: 'bg-accent/20 text-accent border-accent/30' },
+                      { name: 'Shapr3D', color: 'bg-primary/20 text-primary border-primary/30' },
+                      { name: 'Fusion360', color: 'bg-secondary/20 text-secondary border-secondary/30' },
+                      { name: 'Figma', color: 'bg-accent/20 text-accent border-accent/30' },
+                      { name: 'Blender', color: 'bg-primary/20 text-primary border-primary/30' }
+                    ].map((tech, index) => (
+                      <motion.div
+                        key={tech.name}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: index * 0.05 }}
+                        viewport={{ once: true }}
+                        className={`${tech.color} px-4 py-2 rounded-sm text-sm font-mono text-center hover:scale-105 transition-transform duration-200 border`}
+                      >
+                        {tech.name}
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-background">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
-              READY TO <span className="text-primary">COLLABORATE?</span>
-            </h2>
-            <p className="text-lg text-text-muted mb-8">
-              Let's discuss your next engineering challenge or design project.
-            </p>
-            <Link href="/contact" className="cad-button cad-button-primary inline-flex items-center space-x-2">
-              <span>START A PROJECT</span>
-              <ArrowRight size={16} />
-            </Link>
-          </motion.div>
+      {/* Footer */}
+      <footer className="py-8 bg-background border-t border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-text-muted font-mono text-sm">
+            Built by Nicole Kirk
+          </p>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }
