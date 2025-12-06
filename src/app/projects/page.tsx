@@ -231,9 +231,15 @@ export default function Projects() {
         {/* Additional buttons for TouchTiles */}
         {project.title === 'TouchTiles' && (
           <div className="flex gap-2 mt-2">
-            <button className="cad-button flex-1 flex items-center justify-center space-x-2 hover:bg-primary hover:text-background transition-all duration-300">
-              <span>Play concept game!</span>
-            </button>
+            <a 
+              href="https://touchtiles-game.railway.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cad-button flex-1 flex items-center justify-center space-x-2 hover:bg-primary hover:text-background transition-all duration-300"
+            >
+              <Eye size={14} />
+              <span>PLAY CONCEPT GAME</span>
+            </a>
             <a 
               href="/Projects/coding/DT.IA.pdf"
               target="_blank"
