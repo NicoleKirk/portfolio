@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, Eye, Code, Paintbrush } from 'lucide-react';
+import { Github, Eye, Code, Paintbrush, BookOpen } from 'lucide-react';
 import { useState } from 'react';
 import ProjectSlideshow from '@/components/ProjectSlideshow';
 import Image from 'next/image';
@@ -92,6 +92,57 @@ const designProjects = [
   }
 ];
 
+const literatureProjects: Project[] = [
+  {
+    id: 1,
+    title: 'Student Researchers Breaking Barriers: Exploring How STEM Can Drive Education for Sustainability in UK Higher Education',
+    description: 'Our research explored the challenges and opportunities of integrating ESD into taught postgraduate STEM programmes at two east London universities. Using a student-staff co-creation approach, we collaborated with interdisciplinary student researchers on a literature review of best practices and a mapping exercise examining SDG coverage across engineering modules.',
+    category: 'Conference Paper',
+    technologies: [],
+    image: '',
+    status: 'Completed',
+    year: '2025',
+    features: [
+      'Student-staff co-creation approach',
+      'Interdisciplinary research collaboration',
+      'SDG coverage mapping',
+      'Literature review of best practices'
+    ]
+  },
+  {
+    id: 2,
+    title: 'Northeastern Essay Competition',
+    description: 'Discussing how data analytics can be used to influence people, specifically how collaborative filtering algorithms are weaponised in dating apps.',
+    category: 'Essay',
+    technologies: [],
+    image: '',
+    status: 'Completed',
+    year: '2023',
+    features: [
+      'Data analytics exploration',
+      'Algorithm analysis',
+      'Social impact discussion',
+      'Technology ethics'
+    ]
+  },
+  {
+    id: 3,
+    title: 'IB Philosophy Coursework',
+    description: 'Does the system of capitalism amplify the worst aspects of human nature? Analysing the philosophical works of Hobbes, Rousseau, Marx and Smith to the non-philosophical prompt of \'Parasite\' by Korean Director Bong Joon Ho.',
+    category: 'Essay',
+    technologies: [],
+    image: '',
+    status: 'Completed',
+    year: '2023',
+    features: [
+      'Philosophical inquiry',
+      'Economic system analysis',
+      'Critical thinking',
+      'Ethical examination'
+    ]
+  }
+];
+
 // SnapSeat Chair slideshow data
 const snapSeatSlides = [
   {
@@ -133,7 +184,7 @@ interface Project {
 }
 
 export default function Projects() {
-  const [activeTab, setActiveTab] = useState<'coding' | 'design'>('coding');
+  const [activeTab, setActiveTab] = useState<'coding' | 'design' | 'literature'>('coding');
   const [slideshowOpen, setSlideshowOpen] = useState(false);
 
   const renderProject = (project: Project, index: number) => (
@@ -295,6 +346,58 @@ export default function Projects() {
             </a>
           </div>
         )}
+
+        {/* Additional buttons for Literature Papers */}
+        {project.title === 'Student Researchers Breaking Barriers: Exploring How STEM Can Drive Education for Sustainability in UK Higher Education' && (
+          <div className="flex flex-col gap-2 mt-2">
+            <a 
+              href="/Projects/literature/Paper1.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cad-button flex-1 flex items-center justify-center space-x-2 hover:bg-primary hover:text-background transition-all duration-300"
+            >
+              <Eye size={14} />
+              <span>VIEW PDF</span>
+            </a>
+            <a 
+              href="/Projects/literature/Poster.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cad-button flex-1 flex items-center justify-center space-x-2 hover:bg-primary hover:text-background transition-all duration-300"
+            >
+              <Eye size={14} />
+              <span>POSTER</span>
+            </a>
+          </div>
+        )}
+
+        {project.title === 'Northeastern Essay Competition' && (
+          <div className="flex gap-2 mt-2">
+            <a 
+              href="/Projects/literature/Paper2.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cad-button flex-1 flex items-center justify-center space-x-2 hover:bg-primary hover:text-background transition-all duration-300"
+            >
+              <Eye size={14} />
+              <span>VIEW PDF</span>
+            </a>
+          </div>
+        )}
+
+        {project.title === 'IB Philosophy Coursework' && (
+          <div className="flex gap-2 mt-2">
+            <a 
+              href="/Projects/literature/Paper3.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cad-button flex-1 flex items-center justify-center space-x-2 hover:bg-primary hover:text-background transition-all duration-300"
+            >
+              <Eye size={14} />
+              <span>VIEW PDF</span>
+            </a>
+          </div>
+        )}
       </div>
     </motion.div>
   );
@@ -368,6 +471,17 @@ export default function Projects() {
                   <Paintbrush size={16} />
                   <span>DESIGN</span>
                 </button>
+                <button
+                  onClick={() => setActiveTab('literature')}
+                  className={`flex items-center space-x-2 px-6 py-3 font-mono text-sm transition-all duration-300 ${
+                    activeTab === 'literature'
+                      ? 'bg-primary text-background'
+                      : 'text-foreground hover:bg-surface-hover'
+                  }`}
+                >
+                  <BookOpen size={16} />
+                  <span>LITERATURE</span>
+                </button>
               </div>
             </div>
           </motion.div>
@@ -392,7 +506,9 @@ export default function Projects() {
           >
             {activeTab === 'coding' 
               ? codingProjects.map((project, index) => renderProject(project, index))
-              : designProjects.map((project, index) => renderProject(project, index))
+              : activeTab === 'design'
+              ? designProjects.map((project, index) => renderProject(project, index))
+              : literatureProjects.map((project, index) => renderProject(project, index))
             }
           </motion.div>
         </div>
